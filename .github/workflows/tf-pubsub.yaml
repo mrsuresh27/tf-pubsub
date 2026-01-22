@@ -4,13 +4,24 @@ on:
   push:
     branches: [ "main" ]
 
+  workflow_dispatch:
+    inputs:
+      action:
+        description: "Terraform action (apply or destroy)"
+        required: true
+        default: apply
+        type: choice
+        options:
+          - apply
+          - destroy
+
 permissions:
   contents: read
   id-token: write
 
 jobs:
   terraform:
-    runs-on: ubuntu-latest 
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repo
@@ -28,5 +39,10 @@ jobs:
       - name: Terraform Init
         run: terraform init
 
+      - name: Terraform Apply
+        if: ${{ github.event.inputs.action == 'apply' || github.event_name == 'push' }}
+        run: terraform apply -auto-approve
+
       - name: Terraform Destroy
+        if: ${{ github.event.inputs.action == 'destroy' }}
         run: terraform destroy -auto-approve
