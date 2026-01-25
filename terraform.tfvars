@@ -2,10 +2,10 @@ project_id = "hip-runner-477914-h3"
 region     = "asia-south1"
 
 pubsubs = {
-  "orders-topic" = {
-    subscription = "orders-sub"
+  "hareesh-topic" = {
+    subscription = "hareesh-sub"
   }
-  "payments-topic" = {
-    subscription = "payments-sub"
+  "suresh-topic" = {
+    subscription = "suresh-sub"
   }
 }
